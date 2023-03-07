@@ -67,7 +67,7 @@ module.exports = {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $push: { reactions: req.body } },
-      { new: true }
+      { runValidators: true, new: true }
     )
       .populate({
         path: 'reactions',
@@ -82,7 +82,7 @@ module.exports = {
       .catch(err => res.status(500).json(err.message));
   },
 
-  removeReaction(req, res) {
+  deleteReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $pull: { reactions: { reactionId: req.params.reactionId } } },

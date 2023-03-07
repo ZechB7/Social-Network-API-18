@@ -56,12 +56,12 @@ module.exports = {
         User.findOneAndDelete({ _id: req.params.userId })
             .then((user) => {
                 if (!user) {
-                    res.status(400).json({ message: 'No user found with that' });
+                    res.status(404).json({ message: 'No user found with that' });
                     return;
                 }
-                res.json(user);
+                res.json({ message: 'User deleted' });
             })
-            .then(() => res.json({ message: 'User deleted' }))
+            // .then(() => res.json({ message: 'User deleted' }))
             .catch((err) => res.status(500).json(err));
     },
 
@@ -88,7 +88,7 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No user found with that id' })
-                    : res.status(200).json(user)
+                    : res.status(200).json({ message: 'friend removed' })
             )
             .catch((err) => res.status(500).json(err));
     },
