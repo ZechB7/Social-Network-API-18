@@ -7,7 +7,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err.message));
   },
 
-  getSingleThought(req, res) {
+  getOneThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
       .select('-__v')
       .then((thought) =>
@@ -59,7 +59,7 @@ module.exports = {
           ? res.status(404).json({ message: 'No thought with that ID' })
           : User.findOneAndUpdate({ thoughts: req.params.thoughtId }, { $pull: { thoughts: req.params.thoughtId } }, { new: true })
       )
-      .then(() => res.json({ message: '' }))
+      .then(() => res.json({ message: 'Deleted' }))
       .catch((err) => res.status(500).json(err));
   },
 
@@ -90,7 +90,7 @@ module.exports = {
     )
       .then((thought) => {
         if (!thought) {
-          return res.status(404).json({ message: 'Id not found' });
+          res.status(404).json({ message: 'Id not found' });
           return;
         };
         res.json(thought);
